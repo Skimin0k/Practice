@@ -1,11 +1,12 @@
-import {BuildOptions} from "../types/config";
 import ReactRefreshTypeScript from 'react-refresh-typescript'
-import webpack from "webpack";
+import webpack from 'webpack'
+
+import {BuildOptions} from '../types/config'
 
 export function buildTypescriptLoader(options: BuildOptions): webpack.RuleSetRule {
     return {
         test: /\.tsx?$/,
-            use: [
+        use: [
             {
                 loader: require.resolve('ts-loader'),
                 options: {
@@ -16,6 +17,6 @@ export function buildTypescriptLoader(options: BuildOptions): webpack.RuleSetRul
                 },
             },
         ],
-            exclude: /node_modules/,
+        exclude: /node_modules/,
     }
 }

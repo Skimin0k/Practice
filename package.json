@@ -9,7 +9,12 @@
     "start:dev": "webpack serve --env mode=development",
     "build:dev": "webpack --env mode=development ",
     "start:prod": "webpack serve --env mode=production",
-    "build:prod": "webpack --env mode=production"
+    "build:prod": "webpack --env mode=production",
+    "lint": "eslint --config config/eslint/.eslintrc.js \"**/*.{ts,tsx}\" --fix",
+    "lint:check": "eslint --config config/eslint/.eslintrc.js \"**/*.{ts,tsx}\"",
+    "styleLint": "npx stylelint --config config/eslint/.stylelintrc.json \"**/*.scss\" --fix",
+    "styleLint-check": "npx stylelint --config config/eslint/.stylelintrc.json \"**/*.scss\"",
+    "prepare": "husky install"
   },
   "devDependencies": {
     "@pmmmwh/react-refresh-webpack-plugin": "^0.5.10",
@@ -19,14 +24,29 @@
     "@types/react-router-dom": "^5.3.3",
     "@types/webpack": "^5.28.0",
     "@types/webpack-dev-server": "^4.7.2",
+    "@typescript-eslint/eslint-plugin": "^6.10.0",
+    "@typescript-eslint/parser": "^6.10.0",
     "css-loader": "^6.6.0",
+    "eslint": "^8.10.0",
+    "eslint-config-airbnb": "^19.0.4",
+    "eslint-plugin-import": "^2.25.4",
+    "eslint-plugin-jsx-a11y": "^6.5.1",
+    "eslint-plugin-react": "^7.32.2",
+    "eslint-plugin-react-hooks": "^4.6.0",
+    "eslint-plugin-simple-import-sort": "^10.0.0",
+    "eslint-plugin-storybook": "^0.6.12",
+    "eslint-plugin-unused-imports": "^3.0.0",
     "html-webpack-plugin": "^5.5.0",
+    "husky": "^8.0.3",
+    "lint-staged": "^15.0.2",
     "mini-css-extract-plugin": "^2.5.3",
     "react-refresh": "^0.14.0",
     "react-refresh-typescript": "^2.0.9",
     "sass": "^1.69.5",
     "sass-loader": "^13.3.2",
     "style-loader": "^3.3.1",
+    "stylelint": "^14.16.1",
+    "stylelint-config-standard-scss": "^3.0.0",
     "ts-loader": "^9.2.6",
     "ts-node": "^10.5.0",
     "typescript": "^4.5.5",
@@ -44,5 +64,15 @@
   "resolutions": {
     "@types/react": "17.0.2",
     "@types/react-dom": "17.0.2"
+  },
+  "lint-staged": {
+    "*.{ts,js,tsx,jsx}": [
+      "eslint --config config/eslint/.eslintrc.js --fix",
+      "git add"
+    ],
+    "*.{html,scss,css}": [
+      "eslint --config config/eslint/.eslintrc.js --fix",
+      "git add"
+    ]
   }
 }
