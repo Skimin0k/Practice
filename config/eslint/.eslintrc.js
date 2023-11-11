@@ -81,7 +81,7 @@ module.exports = {
         },
 
     ],
-    'ignorePatterns': ['*.test.*'],
+    'ignorePatterns': ['*.test.*', '**/*.css', '**/*.scss'],
     'env': {
         'browser': true,
         'amd': true,
