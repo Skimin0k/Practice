@@ -1,4 +1,4 @@
-import React, {ChangeEventHandler, memo, useCallback} from 'react'
+import React, { memo, useCallback} from 'react'
 import {useSelector} from 'react-redux'
 import {useAppDispatch} from 'app/StoreProvider'
 import {getNoteDraft, noteActions} from 'entity/Note'
@@ -7,6 +7,7 @@ import {RemoveNoteButton} from 'entity/Note/ui/RemoveNoteButton/RemoveNoteButton
 import {ResetDraftButton} from 'entity/Note/ui/ResetDraftButton/ResetDraftButton'
 import {SaveDraftButton} from 'entity/Note/ui/SaveDraftButton/SaveDraftButton'
 import classNames from 'shared/lib/classNames/classNames'
+import {DebouncedInput} from 'shared/ui/DebouncedInput/DebouncedInput'
 
 import styles from './NoteEditor.module.scss'
 
@@ -20,15 +21,15 @@ export const NoteEditor = memo((props: NoteEditorProps) => {
     } = props
     const draft = useSelector(getNoteDraft)
     const dispatch = useAppDispatch()
-    const changeHeaderHandler:  ChangeEventHandler<HTMLInputElement> = useCallback((event) => {
+    const changeHeaderHandler = useCallback((value) => {
         dispatch(noteActions.updateDraftValue({
-            header: event.target.value as string
+            header: value
         }))
     }, [dispatch])
 
-    const changeContentHandler:  ChangeEventHandler<HTMLInputElement> = useCallback((event) => {
+    const changeContentHandler = useCallback((value) => {
         dispatch(noteActions.updateDraftValue({
-            content: event.target.value as string
+            content: value
         }))
     }, [dispatch])
 
@@ -49,19 +50,21 @@ export const NoteEditor = memo((props: NoteEditorProps) => {
             <ResetDraftButton>Reset</ResetDraftButton>
             <RemoveNoteButton id={draft?.id}>Delete</RemoveNoteButton>
             <div>
-                <input
+                <DebouncedInput
                     placeholder={'header'}
                     onChange={changeHeaderHandler}
-                    value={draft?.header}
+                    value={draft?.header || ''}
                     disabled={draft?.header === undefined}
+                    delay={400}
                 />
             </div>
             <div>
-                <input
+                <DebouncedInput
                     placeholder={'content'}
                     onChange={changeContentHandler}
-                    value={draft?.content}
+                    value={draft?.content || ''}
                     disabled={draft?.header === undefined}
+                    delay={400}
                 />
             </div>
         </div>
