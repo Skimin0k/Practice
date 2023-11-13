@@ -2,6 +2,8 @@ import React, {ChangeEventHandler, memo, useCallback} from 'react'
 import {useSelector} from 'react-redux'
 import {useAppDispatch} from 'app/StoreProvider'
 import {getNoteDraft, noteActions} from 'entity/Note'
+import {CreateNewNotButton} from 'entity/Note/ui/CreateNewNotButton/CreateNewNotButton'
+import {RemoveNoteButton} from 'entity/Note/ui/RemoveNoteButton/RemoveNoteButton'
 import {ResetDraftButton} from 'entity/Note/ui/ResetDraftButton/ResetDraftButton'
 import {SaveDraftButton} from 'entity/Note/ui/SaveDraftButton/SaveDraftButton'
 import classNames from 'shared/lib/classNames/classNames'
@@ -42,8 +44,10 @@ export const NoteEditor = memo((props: NoteEditorProps) => {
         <div
             className={classNames(styles.NoteEditor, {}, [className])}
         >
+            <CreateNewNotButton/>
             <SaveDraftButton/>
             <ResetDraftButton/>
+            <RemoveNoteButton id={draft?.id}/>
             <div>
                 <input
                     placeholder={'header'}

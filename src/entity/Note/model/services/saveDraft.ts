@@ -16,14 +16,14 @@ export const saveDraft =
         } = thunkAPI
 
         try {
-            const draft = getNoteDraft(getState())
+            let draft = getNoteDraft(getState())
 
             if(draft?.id) {
-                // await api.patch('', draft)
+                await api.patch('http://localhost:3001/notes/' + draft.id, draft)
             } else {
-                // const newNote = api.post('', draft)
+                const response = await api.post<NoteType>('http://localhost:3001/notes', draft)
+                draft = response.data
             }
-
             return draft as NoteType
 
         } catch (e) {
