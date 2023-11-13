@@ -1,5 +1,4 @@
 import {createEntityAdapter, createSlice, EntityState, PayloadAction} from '@reduxjs/toolkit'
-import {createNote} from 'entity/Note/model/services/createNote'
 import {fetchNotes} from 'entity/Note/model/services/fetchNotes'
 import {removeNote} from 'entity/Note/model/services/removeNote'
 import {saveDraft} from 'entity/Note/model/services/saveDraft'
@@ -36,6 +35,13 @@ const NoteSlice = createSlice({
         updateExistingNoteById: (state, action) => {
             noteAdapter.updateOne(state, action.payload)
         },
+        setEmptyDraft: (state) => {
+            state.draft = {
+                id: undefined,
+                header: '',
+                content: ''
+            }
+        }
     },
     extraReducers: builder => {
         builder.addCase(fetchNotes.pending, (state) => {
@@ -62,17 +68,17 @@ const NoteSlice = createSlice({
             noteAdapter.setOne(state, action.payload)
         })
 
-        builder.addCase(createNote.pending, (state) => {
-            state.isLoading = true
-        })
-        builder.addCase(createNote.rejected, (state, action) => {
-            state.isLoading = false
-            state.error = action.payload
-        })
-        builder.addCase(createNote.fulfilled, (state, action) => {
-            state.isLoading = false
-            noteAdapter.setOne(state, action.payload)
-        })
+        // builder.addCase(createNote.pending, (state) => {
+        //     state.isLoading = true
+        // })
+        // builder.addCase(createNote.rejected, (state, action) => {
+        //     state.isLoading = false
+        //     state.error = action.payload
+        // })
+        // builder.addCase(createNote.fulfilled, (state, action) => {
+        //     state.isLoading = false
+        //     noteAdapter.setOne(state, action.payload)
+        // })
 
         builder.addCase(removeNote.pending, (state) => {
             state.isLoading = true

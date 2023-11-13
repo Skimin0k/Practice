@@ -1,7 +1,7 @@
 import React, {memo, ReactNode, useCallback} from 'react'
-import {useSelector} from 'react-redux'
 import {useAppDispatch} from 'app/StoreProvider'
-import {getNoteDraft, noteActions} from 'entity/Note'
+import { noteActions} from 'entity/Note'
+import {NoteType} from 'entity/Note/model/types/types'
 import classNames from 'shared/lib/classNames/classNames'
 import {Button} from 'shared/ui/Button/Button'
 
@@ -9,25 +9,25 @@ import styles from './ResetDraftButton.module.scss'
 
 interface ResetDraftButtonProps {
     className?: string,
-    children: ReactNode
+    children: ReactNode,
+    id?: NoteType['id']
 }
 
 export const ResetDraftButton = memo((props: ResetDraftButtonProps) => {
     const {
         className,
-        children
+        children,
+        id
     } = props
     const dispatch = useAppDispatch()
-    const draft = useSelector(getNoteDraft)
     const onClickHandler = useCallback(() => {
-        if(draft?.id){
-            dispatch(noteActions.setDraftNoteById(draft.id))
-        }
-    }, [dispatch, draft])
+        if(id) dispatch(noteActions.setDraftNoteById(id))
+    }, [dispatch, id])
     return (
         <Button
             className={classNames(styles.ResetDraftButton, {}, [className])}
             onClick={onClickHandler}
+            disabled={id === undefined}
         >
             {children}
         </Button>
