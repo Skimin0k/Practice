@@ -1,4 +1,4 @@
-import React, {memo, useCallback} from 'react'
+import React, {memo, ReactNode, useCallback} from 'react'
 import {useAppDispatch} from 'app/StoreProvider'
 import {removeNote} from 'entity/Note/model/services/removeNote'
 import {NoteType} from 'entity/Note/model/types/types'
@@ -9,13 +9,15 @@ import styles from './RemoveNoteButton.module.scss'
 
 interface RemoveNoteButtonProps {
     className?: string,
-    id?: NoteType['id']
+    id?: NoteType['id'],
+    children: ReactNode
 }
 
 export const RemoveNoteButton = memo((props: RemoveNoteButtonProps) => {
     const {
         className,
-        id
+        id,
+        children
     } = props
     const dispatch = useAppDispatch()
     const onClickHandler = useCallback(() => {
@@ -27,7 +29,7 @@ export const RemoveNoteButton = memo((props: RemoveNoteButtonProps) => {
             onClick={onClickHandler}
             disabled={id === undefined}
         >
-            Delete
+            {children}
         </Button>
     )
 })

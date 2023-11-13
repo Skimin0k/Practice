@@ -44,10 +44,10 @@ export const NoteEditor = memo((props: NoteEditorProps) => {
         <div
             className={classNames(styles.NoteEditor, {}, [className])}
         >
-            <CreateNewNotButton/>
-            <SaveDraftButton/>
-            <ResetDraftButton/>
-            <RemoveNoteButton id={draft?.id}/>
+            <CreateNewNotButton>Create</CreateNewNotButton>
+            <SaveDraftButton>Save</SaveDraftButton>
+            <ResetDraftButton>Reset</ResetDraftButton>
+            <RemoveNoteButton id={draft?.id}>Delete</RemoveNoteButton>
             <div>
                 <input
                     placeholder={'header'}

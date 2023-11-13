@@ -1,4 +1,4 @@
-import React, {memo, useCallback} from 'react'
+import React, {memo, ReactNode, useCallback} from 'react'
 import {useAppDispatch} from 'app/StoreProvider'
 import {createNote} from 'entity/Note/model/services/createNote'
 import classNames from 'shared/lib/classNames/classNames'
@@ -7,12 +7,14 @@ import {Button} from 'shared/ui/Button/Button'
 import styles from './CreateNewNotButton.module.scss'
 
 interface CreateNewNotButtonProps {
-    className?: string
+    className?: string,
+    children: ReactNode
 }
 
 export const CreateNewNotButton = memo((props: CreateNewNotButtonProps) => {
     const {
-        className
+        className,
+        children
     } = props
     const dispatch = useAppDispatch()
     const onClickHandler = useCallback(() => {
@@ -23,7 +25,7 @@ export const CreateNewNotButton = memo((props: CreateNewNotButtonProps) => {
             className={classNames(styles.CreateNewNotButton, {}, [className])}
             onClick={onClickHandler}
         >
-            Create
+            {children}
         </Button>
     )
 })

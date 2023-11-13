@@ -1,4 +1,4 @@
-import React, {memo, useCallback} from 'react'
+import React, {memo, ReactNode, useCallback} from 'react'
 import {useSelector} from 'react-redux'
 import {useAppDispatch} from 'app/StoreProvider'
 import {getNoteDraft, noteActions} from 'entity/Note'
@@ -8,12 +8,14 @@ import {Button} from 'shared/ui/Button/Button'
 import styles from './ResetDraftButton.module.scss'
 
 interface ResetDraftButtonProps {
-    className?: string
+    className?: string,
+    children: ReactNode
 }
 
 export const ResetDraftButton = memo((props: ResetDraftButtonProps) => {
     const {
-        className
+        className,
+        children
     } = props
     const dispatch = useAppDispatch()
     const draft = useSelector(getNoteDraft)
@@ -27,7 +29,7 @@ export const ResetDraftButton = memo((props: ResetDraftButtonProps) => {
             className={classNames(styles.ResetDraftButton, {}, [className])}
             onClick={onClickHandler}
         >
-            Reset
+            {children}
         </Button>
     )
 })

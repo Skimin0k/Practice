@@ -4,7 +4,10 @@ import {useAppDispatch} from 'app/StoreProvider'
 import {fetchNotes, getNoteIsLoading, getNotesAdapter, noteActions} from 'entity/Note'
 import {NoteType} from 'entity/Note/model/types/types'
 import {MiniCard} from 'entity/Note/ui/MiniCard/MiniCard'
+import {RemoveNoteButton} from 'entity/Note/ui/RemoveNoteButton/RemoveNoteButton'
 import {List} from 'shared/ui/List/List'
+
+import styles from './NoteList.module.scss'
 
 interface NoteListProps {
     className?: string
@@ -41,9 +44,10 @@ export const NoteList = memo((props: NoteListProps) => {
             onClick={() => {
                 selectNote(note.id)
             }}
+            className={styles.NoteListItem}
         >
-
             <MiniCard key={note.id} data={note}/>
+            <RemoveNoteButton id={note.id} className={styles.removeButton}>-</RemoveNoteButton>
         </div>
         }
     />
