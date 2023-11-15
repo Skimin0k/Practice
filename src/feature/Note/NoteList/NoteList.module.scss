@@ -12,3 +12,11 @@
     opacity: 1;
   }
 }
+
+.InfiniteList {
+  border: solid black 1px;
+  display: flex;
+  gap: 10px;
+  flex-direction: column;
+  height: 100px;
+}

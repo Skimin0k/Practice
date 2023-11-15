@@ -1,4 +1,4 @@
-import React, {ChangeEventHandler, useCallback, useMemo} from 'react'
+import React, {ChangeEventHandler, memo, useCallback, useMemo} from 'react'
 import classNames from 'shared/lib/classNames/classNames'
 
 import styles from './Select.module.scss'
@@ -16,7 +16,7 @@ interface SelectProps<T extends string> {
     options: OptionType<T>[]
 }
 
-export const Select =<T extends string>(props: SelectProps<T>) => {
+const SelectWithoutMemo =<T extends string>(props: SelectProps<T>) => {
     const {
         className,
         disabled = false,
@@ -55,3 +55,5 @@ export const Select =<T extends string>(props: SelectProps<T>) => {
         </select>
     )
 }
+
+export const Select = memo(SelectWithoutMemo) as typeof SelectWithoutMemo

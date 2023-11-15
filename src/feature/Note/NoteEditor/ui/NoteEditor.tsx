@@ -2,7 +2,7 @@ import React, { memo, useCallback} from 'react'
 import {useSelector} from 'react-redux'
 import {useAppDispatch} from 'app/StoreProvider'
 import {getNoteDraft, noteActions} from 'entity/Note'
-import {CreateNewNotButton} from 'entity/Note/ui/CreateNewNotButton/CreateNewNotButton'
+import {CreateNewNoteButton} from 'entity/Note/ui/CreateNewNoteButton/CreateNewNoteButton'
 import {RemoveNoteButton} from 'entity/Note/ui/RemoveNoteButton/RemoveNoteButton'
 import {ResetDraftButton} from 'entity/Note/ui/ResetDraftButton/ResetDraftButton'
 import {SaveDraftButton} from 'entity/Note/ui/SaveDraftButton/SaveDraftButton'
@@ -45,7 +45,7 @@ export const NoteEditor = memo((props: NoteEditorProps) => {
         <div
             className={classNames(styles.NoteEditor, {}, [className])}
         >
-            <CreateNewNotButton>Create</CreateNewNotButton>
+            <CreateNewNoteButton>Create</CreateNewNoteButton>
             <SaveDraftButton>Save</SaveDraftButton>
             <ResetDraftButton>Reset</ResetDraftButton>
             <RemoveNoteButton id={draft?.id}>Delete</RemoveNoteButton>

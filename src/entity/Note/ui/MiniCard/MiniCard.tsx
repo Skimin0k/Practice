@@ -23,7 +23,7 @@ export const MiniCard = memo((props: MiniCardProps) => {
         <div
             className={classNames(styles.MiniCard, {}, [className])}
         >
-            <h4>{header} {id}</h4>
+            <h4>{header}</h4>
             <div>{content}</div>
         </div>
     )

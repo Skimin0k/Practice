@@ -4,14 +4,14 @@ import {createNote} from 'entity/Note/model/services/createNote'
 import classNames from 'shared/lib/classNames/classNames'
 import {Button} from 'shared/ui/Button/Button'
 
-import styles from './CreateNewNotButton.module.scss'
+import styles from './CreateNewNoteButton.module.scss'
 
 interface CreateNewNotButtonProps {
     className?: string,
     children: ReactNode
 }
 
-export const CreateNewNotButton = memo((props: CreateNewNotButtonProps) => {
+export const CreateNewNoteButton = memo((props: CreateNewNotButtonProps) => {
     const {
         className,
         children

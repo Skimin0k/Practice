@@ -5,8 +5,7 @@ import styles from './Button.module.scss'
 
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement>{
     className?: string,
-    children?: ReactNode,
-    disabled?: boolean
+    children?: ReactNode
 }
 
 export const Button = memo((props: ButtonProps) => {

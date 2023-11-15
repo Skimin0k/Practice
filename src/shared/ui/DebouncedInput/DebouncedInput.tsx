@@ -1,4 +1,4 @@
-import React, { useCallback, useState} from 'react'
+import React, {memo, useCallback, useState} from 'react'
 import {useDebounce} from 'shared/lib/hooks/useDebounce/useDebounce'
 
 interface DebouncedInputProps extends Omit<React.InputHTMLAttributes<HTMLInputElement>,'onChange' | 'value'> {
@@ -8,9 +8,8 @@ interface DebouncedInputProps extends Omit<React.InputHTMLAttributes<HTMLInputEl
     delay: number
 }
 
-export const DebouncedInput = (props: DebouncedInputProps) => {
+export const DebouncedInput = memo((props: DebouncedInputProps) => {
     const {
-        className,
         value,
         onChange,
         delay,
@@ -27,7 +26,6 @@ export const DebouncedInput = (props: DebouncedInputProps) => {
         <input
             {...rest}
             onChange={onChangeHandler}
-        >
-        </input>
+        />
     )
-}
+})
