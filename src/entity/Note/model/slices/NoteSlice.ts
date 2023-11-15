@@ -8,7 +8,10 @@ import {NoteType} from '../types/types'
 export interface NoteSliceStateSchema extends EntityState<NoteType>{
    isLoading: boolean;
    error?: string;
-   draft?: Partial<NoteType>
+   draft?: Partial<NoteType>;
+   hasMore: boolean;
+   page: number;
+   downloadLimit: number
 }
 
 export const noteAdapter = createEntityAdapter<NoteType>({
@@ -21,6 +24,9 @@ const NoteSlice = createSlice({
         ids: [],
         entities: {},
         isLoading: false,
+        hasMore: true,
+        page: 1,
+        downloadLimit: 3
     }),
     reducers: {
         updateDraftValue: (state, action: PayloadAction<Partial<NoteType>>) => {
@@ -49,7 +55,16 @@ const NoteSlice = createSlice({
         })
         builder.addCase(fetchNotes.fulfilled, (state, action) => {
             state.isLoading = false
-            noteAdapter.setAll(state, action.payload)
+            if(action.payload.length){
+                if(action.meta.arg?.replace){
+                    noteAdapter.setAll(state, action.payload)
+                    state.page = 1
+                } else {
+                    noteAdapter.addMany(state, action.payload)
+                    state.page++
+                }
+            }
+            state.hasMore = action.payload.length > 0
         })
         builder.addCase(fetchNotes.rejected, (state, action) => {
             state.isLoading = false
@@ -67,18 +82,6 @@ const NoteSlice = createSlice({
             state.isLoading = false
             noteAdapter.setOne(state, action.payload)
         })
-
-        // builder.addCase(createNote.pending, (state) => {
-        //     state.isLoading = true
-        // })
-        // builder.addCase(createNote.rejected, (state, action) => {
-        //     state.isLoading = false
-        //     state.error = action.payload
-        // })
-        // builder.addCase(createNote.fulfilled, (state, action) => {
-        //     state.isLoading = false
-        //     noteAdapter.setOne(state, action.payload)
-        // })
 
         builder.addCase(removeNote.pending, (state) => {
             state.isLoading = true
@@ -99,13 +102,3 @@ export const {
     actions: noteActions,
     name: noteSliceName
 } = NoteSlice
-
-// json-server
-// todo: сделать бд
-// todo: убрать заглушку с получения из бд
-// todo: сделать создание новой записи в бд
-// todo: сделать обновление существующей записи в бд
-
-// draft
-// todo создание
-// todo обновление

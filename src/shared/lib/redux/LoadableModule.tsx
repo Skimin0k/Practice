@@ -21,8 +21,6 @@ const LoadableModule :FC<LoadableModuleProps> = (props) => {
         const mountedReducers = store.reducerManager.getReducerMap()
         Object.entries(reducers).forEach(([name, reducer]) => {
             if(!mountedReducers[name as StateSchemaKey]) {
-                // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-                // @ts-expect-error
                 store.reducerManager.add(name as StateSchemaKey, reducer)
                 dispatch({type: `@INIT ${name} storage`})
             } 
