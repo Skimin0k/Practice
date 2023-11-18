@@ -5,7 +5,7 @@ import {fetchNotes} from '../services/fetchNotes'
 import {removeNote} from '../services/removeNote'
 import {NoteType} from '../types/types'
 
-export interface NoteSliceStateSchema extends EntityState<NoteType>{
+export interface NoteListSliceStateSchema extends EntityState<NoteType>{
    isLoading: boolean;
    error?: string;
    hasMore: boolean;
@@ -19,12 +19,12 @@ export const noteAdapter = createEntityAdapter<NoteType>({
 
 const NoteListSlice = createSlice({
     name: 'noteList',
-    initialState: noteAdapter.getInitialState<NoteSliceStateSchema>({
+    initialState: noteAdapter.getInitialState<NoteListSliceStateSchema>({
         ids: [],
         entities: {},
         isLoading: false,
         hasMore: true,
-        page: 1,
+        page: 0,
         downloadLimit: 3
     }),
     reducers: {
@@ -45,7 +45,7 @@ const NoteListSlice = createSlice({
                     state.page = 1
                 } else {
                     noteAdapter.addMany(state, action.payload)
-                    state.page++
+                    if(action.payload.length === state.downloadLimit) state.page++
                 }
             }
             state.hasMore = action.payload.length > 0

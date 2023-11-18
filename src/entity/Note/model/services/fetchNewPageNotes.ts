@@ -2,31 +2,29 @@ import {createAsyncThunk} from '@reduxjs/toolkit'
 import {ThunkApi} from 'app/StoreProvider'
 
 import {getNoteHasMore} from '../selectors/getNoteHasMore'
+import {getNoteIsLoading} from '../selectors/getNoteIsLoading'
+import {getNotePage} from '../selectors/getNotePage'
 import {noteListSliceName} from '../slices/NoteListSlice'
 
 import {fetchNotes} from './fetchNotes'
 
-export interface fetchNotesProps {
-    replace?:boolean
-}
-
 export const fetchNewPageNotes =
-    createAsyncThunk<void, fetchNotesProps, ThunkApi<string>>
+    createAsyncThunk<void, void, ThunkApi<string>>
     (`${noteListSliceName}/fetchNewPageNotes`,async (args, thunkAPI) => {
         const {
             rejectWithValue,
             getState,
             dispatch
         } = thunkAPI
-        const {
-            replace
-        } = args
 
         try {
             const hasMore = getNoteHasMore(getState())
-            if(hasMore){
+            const isNoteListLoading = getNoteIsLoading(getState())
+            const page = getNotePage(getState())
+
+            if(hasMore && !isNoteListLoading){
                 dispatch(fetchNotes({
-                    replace
+                    _page: page + 1
                 }))
             }
         } catch (e) {

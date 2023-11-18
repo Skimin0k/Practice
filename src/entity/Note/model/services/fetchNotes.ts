@@ -2,16 +2,17 @@ import {createAsyncThunk} from '@reduxjs/toolkit'
 import {ThunkApi} from 'app/StoreProvider'
 
 import {getNoteDownloadLimit} from '../selectors/getNoteDownloadLimit'
-import {getNotePage} from '../selectors/getNotePage'
+import {getSearchInput} from '../selectors/getSearchInput'
 import {NoteType} from '../types/types'
 
 export interface fetchNotesProps {
     replace?:boolean,
+    _page?: number
 }
 
 export const fetchNotes =
-    createAsyncThunk<NoteType[], fetchNotesProps | undefined, ThunkApi<string>>
-    ('notesList/fetchNotes',async (_, thunkAPI) => {
+    createAsyncThunk<NoteType[], fetchNotesProps, ThunkApi<string>>
+    ('notesList/fetchNotes',async (args, thunkAPI) => {
         const {
             rejectWithValue,
             getState,
@@ -20,13 +21,17 @@ export const fetchNotes =
             }
         } = thunkAPI
         try {
-            const _page = getNotePage(getState())
+            const {
+                _page = 1
+            } = args
             const _limit = getNoteDownloadLimit(getState())
+            const _search = getSearchInput(getState())
 
             const notes = await api.get<NoteType[]>('http://localhost:3001/notes',{
                 params: {
                     _page,
-                    _limit
+                    _limit,
+                    q: _search
                 }
             })
             return notes.data
@@ -34,3 +39,5 @@ export const fetchNotes =
             return rejectWithValue('fetch notes failed')
         }
     })
+
+// todo is not loading for all fetches

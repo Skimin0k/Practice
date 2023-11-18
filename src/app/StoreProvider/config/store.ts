@@ -1,6 +1,13 @@
 import {useDispatch} from 'react-redux'
 import {CombinedState, configureStore, ReducersMapObject} from '@reduxjs/toolkit'
-import {draftNoteReducer, draftNoteSliceName, noteListReducer, noteListSliceName} from 'entity/Note'
+import {
+    draftNoteReducer,
+    draftNoteSliceName,
+    filtersNoteReducer,
+    filtersNoteSliceName,
+    noteListReducer,
+    noteListSliceName
+} from 'entity/Note'
 import {$api} from 'shared/config/api/api'
 
 import {createReducerManager} from './ReducerManager'
@@ -13,6 +20,8 @@ export const configureReduxStore = (
     const rootReducer : ReducersMapObject<StateSchema> = {
         [noteListSliceName]: noteListReducer,
         [draftNoteSliceName]: draftNoteReducer,
+        [filtersNoteSliceName]: filtersNoteReducer,
+
         ...asyncReducers,
         // асинхронные редюсеры
     }
