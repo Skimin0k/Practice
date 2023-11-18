@@ -7,6 +7,7 @@ export interface DraftNoteSliceStateSchema{
     isLoading: boolean;
     error?: string;
     draft?: Partial<NoteType>;
+    isEditable: boolean
 }
 const createEmptyNote:() => Partial<NoteType> = () => ({
     id: undefined,
@@ -16,7 +17,8 @@ const createEmptyNote:() => Partial<NoteType> = () => ({
 })
 const initialState : DraftNoteSliceStateSchema = {
     isLoading: false,
-    draft: createEmptyNote()
+    draft: createEmptyNote(),
+    isEditable: false
 }
 const DraftNoteSlice = createSlice({
     name: 'draftNote',
@@ -30,6 +32,10 @@ const DraftNoteSlice = createSlice({
         },
         setEmptyDraft: (state) => {
             state.draft = createEmptyNote()
+            state.isEditable = true
+        },
+        setEditable: (state, action:PayloadAction<boolean>) => {
+            state.isEditable = action.payload
         }
     },
     extraReducers: builder => {

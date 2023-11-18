@@ -22,6 +22,7 @@ export const NoteList = memo((props: NoteListProps) => {
 
     const selectNote = useCallback((note: NoteType) => {
         dispatch(draftNoteActions.updateDraftValue(note))
+        dispatch(draftNoteActions.setEditable(false))
     }, [dispatch])
 
     const onScrollEnd = useCallback(() => {

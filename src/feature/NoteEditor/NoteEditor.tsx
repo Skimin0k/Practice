@@ -2,6 +2,7 @@ import React, { memo, useCallback} from 'react'
 import {useSelector} from 'react-redux'
 import {useAppDispatch} from 'app/StoreProvider'
 import {draftNoteActions, getNoteDraft, removeNote, resetDraft, saveDraft} from 'entity/Note'
+import {getIsEditable} from 'entity/Note/model/selectors/getIsEditable'
 import classNames from 'shared/lib/classNames/classNames'
 import {Button} from 'shared/ui/Button/Button'
 import {Input} from 'shared/ui/Input/Input'
@@ -41,30 +42,48 @@ export const NoteEditor = memo((props: NoteEditorProps) => {
     const onClickRemoveButtonHandler = useCallback(() => {
         dispatch(removeNote(draft?.id))
     }, [dispatch, draft?.id])
-
+    const editOnClick = useCallback(() => {
+        dispatch(draftNoteActions.setEditable(true))
+    }, [dispatch])
+    const isEditable = useSelector(getIsEditable)
     return (
         <div
             className={classNames(styles.NoteEditor, {}, [className])}
         >
             <Button
-                onClick={onClickSaveButtonHandler}
+                onClick={editOnClick}
+                disabled={isEditable}
             >
-                Save
+                Edit
             </Button>
-            <Button
-                onClick={onClickResetButtonHandler}
-            >
-                Reset
-            </Button>
-            <Button onClick={onClickRemoveButtonHandler}>
-                Remove
-            </Button>
+            <div>
+                <Button
+                    onClick={onClickSaveButtonHandler}
+                    disabled={!isEditable}
+                >
+                    Save
+                </Button>
+                <Button
+                    onClick={onClickResetButtonHandler}
+                    disabled={!isEditable}
+                >
+                    Reset
+                </Button>
+                <Button
+                    onClick={onClickRemoveButtonHandler}
+                    disabled={!isEditable || draft?.id === undefined}
+                >
+                    Remove
+                </Button>
+
+            </div>
             <div>
                 <Input
                     placeholder={'header'}
                     onChange={changeHeaderHandler}
                     value={draft?.header || ''}
-                    disabled={draft?.header === undefined}
+                    disabled={draft?.header === undefined || !isEditable}
+
                 />
             </div>
             <div>
@@ -72,7 +91,7 @@ export const NoteEditor = memo((props: NoteEditorProps) => {
                     placeholder={'content'}
                     onChange={changeContentHandler}
                     value={draft?.content || ''}
-                    disabled={draft?.header === undefined}
+                    disabled={draft?.header === undefined || !isEditable}
                 />
             </div>
         </div>
