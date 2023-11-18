@@ -1,12 +1,12 @@
 import React, {memo, useCallback, useEffect, useState} from 'react'
 import {useDebounce} from 'shared/lib/hooks/useDebounce/useDebounce'
-import {Input, InputProps} from 'shared/ui/Input/Input'
+import {TextArea, TextAreaProps} from 'shared/ui/TextArea/TextArea'
 
-interface DebouncedInputProps extends InputProps {
-    delay: number
+interface DebouncedTextAreaProps extends TextAreaProps {
+    delay: number,
 }
 
-export const DebouncedInput = memo((props: DebouncedInputProps) => {
+export const DebouncedTextAreaWithoutMemo = memo((props: DebouncedTextAreaProps) => {
     const {
         value,
         onChange,
@@ -22,12 +22,13 @@ export const DebouncedInput = memo((props: DebouncedInputProps) => {
         setState(newValue)
         debouncedOnChange(newValue)
     }, [debouncedOnChange])
-    
+
     return (
-        <Input
+        <TextArea
             {...rest}
             onChange={onChangeHandler}
             value={state}
         />
     )
 })
+export const DebouncedTextArea = memo(DebouncedTextAreaWithoutMemo) as typeof DebouncedTextAreaWithoutMemo

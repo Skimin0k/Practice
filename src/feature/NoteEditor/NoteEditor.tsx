@@ -5,7 +5,8 @@ import {draftNoteActions, getNoteDraft, removeNote, resetDraft, saveDraft} from 
 import {getIsEditable} from 'entity/Note/model/selectors/getIsEditable'
 import classNames from 'shared/lib/classNames/classNames'
 import {Button} from 'shared/ui/Button/Button'
-import {Input} from 'shared/ui/Input/Input'
+import {DebouncedInput} from 'shared/ui/DebouncedInput/DebouncedInput'
+import {DebouncedTextArea} from 'shared/ui/DebouncedTextArea/DebouncedTextArea'
 
 import styles from './NoteEditor.module.scss'
 
@@ -78,20 +79,21 @@ export const NoteEditor = memo((props: NoteEditorProps) => {
 
             </div>
             <div>
-                <Input
+                <DebouncedInput
                     placeholder={'header'}
                     onChange={changeHeaderHandler}
                     value={draft?.header || ''}
                     disabled={draft?.header === undefined || !isEditable}
-
+                    delay={250}
                 />
             </div>
             <div>
-                <Input
+                <DebouncedTextArea
                     placeholder={'content'}
                     onChange={changeContentHandler}
                     value={draft?.content || ''}
                     disabled={draft?.header === undefined || !isEditable}
+                    delay={250}
                 />
             </div>
         </div>
