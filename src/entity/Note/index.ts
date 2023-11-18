@@ -1,3 +1,4 @@
+export {getFiltersOrder} from './model/selectors/getFiltersOrder'
 export {getNoteDraft} from './model/selectors/getNoteDraft'
 export {getSearchInput} from './model/selectors/getSearchInput'
 export {fetchNewPageNotes} from './model/services/fetchNewPageNotes'
@@ -11,6 +12,7 @@ export {
     draftNoteSliceName
 } from './model/slices/DraftNoteSlice'
 export type {FiltersSliceStateSchema} from './model/slices/FiltersSlice'
+export {Order} from './model/slices/FiltersSlice'
 export {
     filtersNoteAction,
     filtersNoteReducer,
@@ -25,3 +27,4 @@ export {
 } from './model/slices/NoteListSlice'
 export type {NoteType} from './model/types/types'
 export {MiniCard} from './ui/MiniCard/MiniCard'
+

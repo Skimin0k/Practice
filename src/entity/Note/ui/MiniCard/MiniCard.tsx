@@ -15,7 +15,8 @@ export const MiniCard = memo((props: MiniCardProps) => {
         className,
         data: {
             header,
-            content
+            content,
+            createdAt
         }
     } = props
     return (
@@ -24,6 +25,7 @@ export const MiniCard = memo((props: MiniCardProps) => {
         >
             <h4>{header}</h4>
             <div>{content}</div>
+            <div>{new Date(Number(createdAt)).toISOString()}</div>
         </div>
     )
 })

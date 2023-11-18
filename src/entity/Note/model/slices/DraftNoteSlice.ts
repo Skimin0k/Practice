@@ -8,13 +8,15 @@ export interface DraftNoteSliceStateSchema{
     error?: string;
     draft?: Partial<NoteType>;
 }
+const createEmptyNote:() => Partial<NoteType> = () => ({
+    id: undefined,
+    header: '',
+    content: '',
+    createdAt: new Date().valueOf().toString()
+})
 const initialState : DraftNoteSliceStateSchema = {
     isLoading: false,
-    draft: {
-        id: undefined,
-        header: '',
-        content: ''
-    }
+    draft: createEmptyNote()
 }
 const DraftNoteSlice = createSlice({
     name: 'draftNote',
@@ -27,11 +29,7 @@ const DraftNoteSlice = createSlice({
             }
         },
         setEmptyDraft: (state) => {
-            state.draft = {
-                id: undefined,
-                header: '',
-                content: ''
-            }
+            state.draft = createEmptyNote()
         }
     },
     extraReducers: builder => {

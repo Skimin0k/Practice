@@ -1,10 +1,16 @@
 import {createSlice, PayloadAction} from '@reduxjs/toolkit'
 
+export enum Order {
+    DESK='desc',
+    ASC='asc'
+}
 export interface FiltersSliceStateSchema{
-    search: string
+    search: string,
+    order: Order
 }
 const initialState : FiltersSliceStateSchema = {
-    search: ''
+    search: '',
+    order: Order.DESK
 }
 const FiltersSlice = createSlice({
     name: 'filters',

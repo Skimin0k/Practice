@@ -1,4 +1,4 @@
-import React, { useCallback} from 'react'
+import React, {memo, useCallback} from 'react'
 
 import styles from './Input.module.scss'
 
@@ -6,7 +6,7 @@ export interface InputType extends Omit<React.InputHTMLAttributes<HTMLInputEleme
     onChange: (value: string) => void
 }
 
-const Input = (props: InputType) => {
+const InputWithoutMemo = (props: InputType) => {
     const {onChange, ...rest } = props
     const onChangeHandler = useCallback<React.ChangeEventHandler<HTMLInputElement>>((event) => {
         onChange(event.target.value)
@@ -18,4 +18,4 @@ const Input = (props: InputType) => {
     />
 }
 
-export default Input
+export const Input = memo(InputWithoutMemo) as typeof InputWithoutMemo

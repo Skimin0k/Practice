@@ -4,7 +4,7 @@ import {useAppDispatch} from 'app/StoreProvider'
 import {draftNoteActions, getNoteDraft, removeNote, resetDraft, saveDraft} from 'entity/Note'
 import classNames from 'shared/lib/classNames/classNames'
 import {Button} from 'shared/ui/Button/Button'
-import Input from 'shared/ui/Input/Input'
+import {Input} from 'shared/ui/Input/Input'
 
 import styles from './NoteEditor.module.scss'
 

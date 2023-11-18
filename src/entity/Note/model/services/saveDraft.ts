@@ -1,9 +1,9 @@
 import {createAsyncThunk} from '@reduxjs/toolkit'
 import {ThunkApi} from 'app/StoreProvider'
+import {fetchNotes} from 'entity/Note/model/services/fetchNotes'
 
 import {getNoteDraft} from '../selectors/getNoteDraft'
 import {draftNoteSliceName} from '../slices/DraftNoteSlice'
-import {noteListActions} from '../slices/NoteListSlice'
 import {NoteType} from '../types/types'
 
 export const saveDraft =
@@ -27,7 +27,9 @@ export const saveDraft =
                 const response = await api.post<NoteType>('http://localhost:3001/notes', draft)
                 draft = response.data
             }
-            dispatch(noteListActions.setOne(draft as NoteType))
+            dispatch(fetchNotes({
+                replace:true
+            }))
             return draft as NoteType
 
         } catch (e) {

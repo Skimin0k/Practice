@@ -24,7 +24,7 @@ export const NoteList = memo((props: NoteListProps) => {
     }, [dispatch])
 
     const onScrollEnd = useCallback(() => {
-        dispatch(fetchNewPageNotes({}))
+        dispatch(fetchNewPageNotes())
     }, [dispatch])
 
     return <InfiniteList
