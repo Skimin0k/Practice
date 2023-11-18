@@ -1,14 +1,13 @@
 import {createEntityAdapter, createSlice, EntityState, PayloadAction} from '@reduxjs/toolkit'
-import {fetchNotes} from 'entity/Note/model/services/fetchNotes'
-import {removeNote} from 'entity/Note/model/services/removeNote'
-import {saveDraft} from 'entity/Note/model/services/saveDraft'
+import {StateSchema} from 'app/StoreProvider'
 
+import {fetchNotes} from '../services/fetchNotes'
+import {removeNote} from '../services/removeNote'
 import {NoteType} from '../types/types'
 
 export interface NoteSliceStateSchema extends EntityState<NoteType>{
    isLoading: boolean;
    error?: string;
-   draft?: Partial<NoteType>;
    hasMore: boolean;
    page: number;
    downloadLimit: number
@@ -18,8 +17,8 @@ export const noteAdapter = createEntityAdapter<NoteType>({
     selectId: (note) => note.id
 })
 
-const NoteSlice = createSlice({
-    name: 'note',
+const NoteListSlice = createSlice({
+    name: 'noteList',
     initialState: noteAdapter.getInitialState<NoteSliceStateSchema>({
         ids: [],
         entities: {},
@@ -29,27 +28,12 @@ const NoteSlice = createSlice({
         downloadLimit: 3
     }),
     reducers: {
-        updateDraftValue: (state, action: PayloadAction<Partial<NoteType>>) => {
-            state.draft = {
-                ...state.draft,
-                ...action.payload
-            }
-        },
-        setDraftNoteById: (state, action:PayloadAction<NoteType['id']>) => {
-            state.draft = noteAdapter.getSelectors().selectById(state, action.payload)
-        },
-        updateExistingNoteById: (state, action) => {
-            noteAdapter.updateOne(state, action.payload)
-        },
-        setEmptyDraft: (state) => {
-            state.draft = {
-                id: undefined,
-                header: '',
-                content: ''
-            }
+        setOne:(state, action: PayloadAction<NoteType>) => {
+            noteAdapter.setOne(state, action.payload)
         }
     },
     extraReducers: builder => {
+
         builder.addCase(fetchNotes.pending, (state) => {
             state.isLoading = true
         })
@@ -71,18 +55,6 @@ const NoteSlice = createSlice({
             state.error = action.payload
         })
 
-        builder.addCase(saveDraft.pending, (state) => {
-            state.isLoading = true
-        })
-        builder.addCase(saveDraft.rejected, (state, action) => {
-            state.isLoading = false
-            state.error = action.payload
-        })
-        builder.addCase(saveDraft.fulfilled, (state, action) => {
-            state.isLoading = false
-            noteAdapter.setOne(state, action.payload)
-        })
-
         builder.addCase(removeNote.pending, (state) => {
             state.isLoading = true
         })
@@ -97,8 +69,12 @@ const NoteSlice = createSlice({
     }
 })
 
+export const noteListSelectors = noteAdapter.getSelectors<StateSchema>(
+    (state) => state?.[noteListSliceName] || noteAdapter.getInitialState()
+)
+
 export const {
-    reducer: noteReducer,
-    actions: noteActions,
-    name: noteSliceName
-} = NoteSlice
+    reducer: noteListReducer,
+    actions: noteListActions,
+    name: noteListSliceName
+} = NoteListSlice

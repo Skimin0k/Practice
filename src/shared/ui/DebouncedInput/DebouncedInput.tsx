@@ -1,4 +1,4 @@
-import React, {memo, useCallback, useState} from 'react'
+import React, {memo, useCallback, useEffect, useState} from 'react'
 import {useDebounce} from 'shared/lib/hooks/useDebounce/useDebounce'
 
 interface DebouncedInputProps extends Omit<React.InputHTMLAttributes<HTMLInputElement>,'onChange' | 'value'> {
@@ -16,6 +16,10 @@ export const DebouncedInput = memo((props: DebouncedInputProps) => {
         ...rest
     } = props
     const [state, setState] = useState(value)
+    useEffect(() => {
+        console.log(value)
+        setState(value)
+    }, [value])
     const debouncedOnChange = useDebounce(onChange, delay)
     const onChangeHandler: React.ChangeEventHandler<HTMLInputElement> = useCallback((event) => {
         setState(event.target.value)
@@ -26,6 +30,7 @@ export const DebouncedInput = memo((props: DebouncedInputProps) => {
         <input
             {...rest}
             onChange={onChangeHandler}
+            value={state}
         />
     )
 })

@@ -15,8 +15,7 @@ export const MiniCard = memo((props: MiniCardProps) => {
         className,
         data: {
             header,
-            content,
-            id
+            content
         }
     } = props
     return (

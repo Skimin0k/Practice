@@ -1,11 +1,7 @@
 import React, {memo, useCallback} from 'react'
 import {useSelector} from 'react-redux'
 import {useAppDispatch} from 'app/StoreProvider'
-import { getNotesAdapter, noteActions} from 'entity/Note'
-import {fetchNewPageNotes} from 'entity/Note/model/services/fetchNewPageNotes'
-import {NoteType} from 'entity/Note/model/types/types'
-import {MiniCard} from 'entity/Note/ui/MiniCard/MiniCard'
-import {RemoveNoteButton} from 'entity/Note/ui/RemoveNoteButton/RemoveNoteButton'
+import {draftNoteActions, fetchNewPageNotes, MiniCard, noteListSelectors, NoteType} from 'entity/Note'
 import {InfiniteList} from 'shared/ui/InfiniteList/InfiniteList'
 
 import styles from './NoteList.module.scss'
@@ -19,15 +15,14 @@ export const NoteList = memo((props: NoteListProps) => {
         className
     } = props
 
-    const notes = useSelector(getNotesAdapter.selectAll)
+    const notes = useSelector(noteListSelectors.selectAll)
 
     const dispatch = useAppDispatch()
 
-    const selectNote = useCallback((id: NoteType['id']) => {
-        dispatch(noteActions.setDraftNoteById(id))
+    const selectNote = useCallback((note: NoteType) => {
+        dispatch(draftNoteActions.updateDraftValue(note))
     }, [dispatch])
 
-    // eslint-disable-next-line react-hooks/rules-of-hooks
     const onScrollEnd = useCallback(() => {
         dispatch(fetchNewPageNotes({}))
     }, [dispatch])
@@ -36,13 +31,12 @@ export const NoteList = memo((props: NoteListProps) => {
         data={notes}
         renderElement={(note) => <div
             onClick={() => {
-                selectNote(note.id)
+                selectNote(note)
             }}
             className={styles.NoteListItem}
             key={note.id}
         >
             <MiniCard data={note}/>
-            <RemoveNoteButton id={note.id} className={styles.removeButton}>-</RemoveNoteButton>
         </div>}
         hasMore={false}
         onScrollEnd={onScrollEnd}

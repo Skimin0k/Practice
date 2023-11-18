@@ -1,13 +1,10 @@
 import React, { memo, useCallback} from 'react'
 import {useSelector} from 'react-redux'
 import {useAppDispatch} from 'app/StoreProvider'
-import {getNoteDraft, noteActions} from 'entity/Note'
-import {CreateNewNoteButton} from 'entity/Note/ui/CreateNewNoteButton/CreateNewNoteButton'
-import {RemoveNoteButton} from 'entity/Note/ui/RemoveNoteButton/RemoveNoteButton'
-import {ResetDraftButton} from 'entity/Note/ui/ResetDraftButton/ResetDraftButton'
-import {SaveDraftButton} from 'entity/Note/ui/SaveDraftButton/SaveDraftButton'
+import {draftNoteActions, getNoteDraft, removeNote, resetDraft, saveDraft} from 'entity/Note'
 import classNames from 'shared/lib/classNames/classNames'
-import {DebouncedInput} from 'shared/ui/DebouncedInput/DebouncedInput'
+import {Button} from 'shared/ui/Button/Button'
+import Input from 'shared/ui/Input/Input'
 
 import styles from './NoteEditor.module.scss'
 
@@ -22,49 +19,60 @@ export const NoteEditor = memo((props: NoteEditorProps) => {
     const draft = useSelector(getNoteDraft)
     const dispatch = useAppDispatch()
     const changeHeaderHandler = useCallback((value) => {
-        dispatch(noteActions.updateDraftValue({
+        dispatch(draftNoteActions.updateDraftValue({
             header: value
         }))
     }, [dispatch])
 
     const changeContentHandler = useCallback((value) => {
-        dispatch(noteActions.updateDraftValue({
+        dispatch(draftNoteActions.updateDraftValue({
             content: value
         }))
     }, [dispatch])
 
-    // if(draft === undefined) {
-    //     return <div
-    //         className={classNames(styles.NoteEditor, {}, [className])}
-    //     >
-    //         ни один элемент еще не выбран
-    //     </div>
-    // }
+    const onClickSaveButtonHandler = useCallback(() => {
+        dispatch(saveDraft())
+    }, [dispatch])
+
+    const onClickResetButtonHandler = useCallback(() => {
+        dispatch(resetDraft())
+    }, [dispatch])
+    
+    const onClickRemoveButtonHandler = useCallback(() => {
+        dispatch(removeNote(draft?.id))
+    }, [dispatch, draft?.id])
 
     return (
         <div
             className={classNames(styles.NoteEditor, {}, [className])}
         >
-            <CreateNewNoteButton>Create</CreateNewNoteButton>
-            <SaveDraftButton>Save</SaveDraftButton>
-            <ResetDraftButton>Reset</ResetDraftButton>
-            <RemoveNoteButton id={draft?.id}>Delete</RemoveNoteButton>
+            <Button
+                onClick={onClickSaveButtonHandler}
+            >
+                Save
+            </Button>
+            <Button
+                onClick={onClickResetButtonHandler}
+            >
+                Reset
+            </Button>
+            <Button onClick={onClickRemoveButtonHandler}>
+                Remove
+            </Button>
             <div>
-                <DebouncedInput
+                <Input
                     placeholder={'header'}
                     onChange={changeHeaderHandler}
                     value={draft?.header || ''}
                     disabled={draft?.header === undefined}
-                    delay={400}
                 />
             </div>
             <div>
-                <DebouncedInput
+                <Input
                     placeholder={'content'}
                     onChange={changeContentHandler}
                     value={draft?.content || ''}
                     disabled={draft?.header === undefined}
-                    delay={400}
                 />
             </div>
         </div>

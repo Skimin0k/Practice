@@ -1,5 +1,5 @@
 import {StateSchema} from 'app/StoreProvider'
 
-import {noteSliceName} from '../slices/NoteSlice'
+import {noteListSliceName} from '../slices/NoteListSlice'
 
-export const getNoteIsLoading = (state: StateSchema) => state[noteSliceName].isLoading
+export const getNoteIsLoading = (state: StateSchema) => state[noteListSliceName].isLoading

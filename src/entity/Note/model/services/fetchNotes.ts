@@ -1,8 +1,8 @@
 import {createAsyncThunk} from '@reduxjs/toolkit'
 import {ThunkApi} from 'app/StoreProvider'
-import {getNoteDownloadLimit} from 'entity/Note/model/selectors/getNoteDownloadLimit'
-import {getNotePage} from 'entity/Note/model/selectors/getNotePage'
 
+import {getNoteDownloadLimit} from '../selectors/getNoteDownloadLimit'
+import {getNotePage} from '../selectors/getNotePage'
 import {NoteType} from '../types/types'
 
 export interface fetchNotesProps {
@@ -11,7 +11,7 @@ export interface fetchNotesProps {
 
 export const fetchNotes =
     createAsyncThunk<NoteType[], fetchNotesProps | undefined, ThunkApi<string>>
-    ('note/fetchNotes',async (_, thunkAPI) => {
+    ('notesList/fetchNotes',async (_, thunkAPI) => {
         const {
             rejectWithValue,
             getState,

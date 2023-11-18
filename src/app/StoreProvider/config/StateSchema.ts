@@ -1,9 +1,12 @@
 import {AnyAction, CombinedState, EnhancedStore, Reducer, ReducersMapObject} from '@reduxjs/toolkit'
 import { AxiosInstance } from 'axios'
-import {noteSliceName, NoteSliceStateSchema} from 'entity/Note'
+import { NoteSliceStateSchema} from 'entity/Note'
+import {draftNoteSliceName, DraftNoteSliceStateSchema} from 'entity/Note/model/slices/DraftNoteSlice'
+import {noteListSliceName} from 'entity/Note/model/slices/NoteListSlice'
 
 export interface StateSchema {
-    [noteSliceName]: NoteSliceStateSchema
+    [noteListSliceName]: NoteSliceStateSchema,
+    [draftNoteSliceName]: DraftNoteSliceStateSchema
 }
 
 export interface ReducerManager {

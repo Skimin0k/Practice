@@ -1,6 +1,17 @@
-export {getNoteDraft} from 'entity/Note/model/selectors/getNoteDraft'
-export {getNoteIsLoading} from 'entity/Note/model/selectors/getNoteIsLoading'
-export {getNotesAdapter} from 'entity/Note/model/selectors/getNotesAdapter'
-export {fetchNotes} from 'entity/Note/model/services/fetchNotes'
-export type {NoteSliceStateSchema} from 'entity/Note/model/slices/NoteSlice'
-export {noteActions, noteReducer, noteSliceName} from 'entity/Note/model/slices/NoteSlice'
+export {getNoteDraft} from './model/selectors/getNoteDraft'
+export {fetchNewPageNotes} from './model/services/fetchNewPageNotes'
+export {removeNote} from './model/services/removeNote'
+export {resetDraft} from './model/services/resetDraft'
+export {saveDraft} from './model/services/saveDraft'
+export {
+    draftNoteActions,
+    draftNoteReducer,
+    draftNoteSliceName
+} from './model/slices/DraftNoteSlice'
+export {
+    noteListActions,
+    noteListReducer,
+    noteListSelectors,
+    noteListSliceName} from './model/slices/NoteListSlice'
+export type {NoteType} from './model/types/types'
+export {MiniCard} from './ui/MiniCard/MiniCard'

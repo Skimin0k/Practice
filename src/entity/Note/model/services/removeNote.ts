@@ -1,10 +1,12 @@
 import {createAsyncThunk} from '@reduxjs/toolkit'
 import {ThunkApi} from 'app/StoreProvider'
-import {NoteType} from 'entity/Note/model/types/types'
+
+import {noteListSliceName} from '../slices/NoteListSlice'
+import {NoteType} from '../types/types'
 
 export const removeNote =
-    createAsyncThunk<NoteType['id'], NoteType['id'], ThunkApi<string>>
-    ('note/removeNote',async (id, thunkAPI) => {
+    createAsyncThunk<NoteType['id'], NoteType['id'] | undefined, ThunkApi<string>>
+    (`${noteListSliceName}/removeNote`,async (id, thunkAPI) => {
         const {
             rejectWithValue,
             extra: {
@@ -13,8 +15,11 @@ export const removeNote =
         } = thunkAPI
 
         try {
-            await api.delete('http://localhost:3001/notes/' + id)
-            return id
+            if(id){
+                await api.delete('http://localhost:3001/notes/' + id)
+                return id
+            }
+            return rejectWithValue('there is no id in note')
         } catch (e) {
             return rejectWithValue('save data failed')
         }

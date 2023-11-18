@@ -1,34 +1,19 @@
 {
   "notes": [
     {
-      "id": "4",
-      "header": "заголовок",
-      "content": "какое-то описание"
-    },
-    {
-      "id": "5",
-      "header": "заголовок",
-      "content": "какое-то описание"
-    },
-    {
-      "header": "Новая заметка",
-      "content": "пустое описание",
-      "id": "bbNhtnq"
-    },
-    {
       "header": "Новая заметка",
       "content": "пустое описание",
       "id": "s1Tmjq6"
     },
     {
-      "header": "Новая заметка",
+      "header": "Новая заметка 123",
       "content": "пустое описание",
       "id": "8QzGlPS"
     },
     {
-      "header": "asdfadsfasd",
-      "content": "fasdfasdfsf",
-      "id": "c57o7ud"
+      "header": "asdfasd",
+      "content": "ffafa",
+      "id": "RCtR_jJ"
     }
   ]
 }
