@@ -1,6 +1,6 @@
 import {createAsyncThunk} from '@reduxjs/toolkit'
 import {ThunkApi} from 'app/StoreProvider'
-import {fetchNotes} from 'entity/Note/model/services/fetchNotes'
+import {fetchNotes} from 'feature/NoteList/model/services/fetchNotes'
 
 import {getNoteDraft} from '../selectors/getNoteDraft'
 import {draftNoteSliceName} from '../slices/DraftNoteSlice'

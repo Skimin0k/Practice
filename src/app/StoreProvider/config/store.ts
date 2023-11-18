@@ -3,11 +3,10 @@ import {CombinedState, configureStore, ReducersMapObject} from '@reduxjs/toolkit
 import {
     draftNoteReducer,
     draftNoteSliceName,
-    filtersNoteReducer,
-    filtersNoteSliceName,
     noteListReducer,
     noteListSliceName
 } from 'entity/Note'
+import {filtersNoteReducer, filtersNoteSliceName} from 'feature/NoteList'
 import {$api} from 'shared/config/api/api'
 
 import {createReducerManager} from './ReducerManager'

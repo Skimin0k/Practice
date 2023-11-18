@@ -1,16 +1,12 @@
 import {createAsyncThunk} from '@reduxjs/toolkit'
 import {ThunkApi} from 'app/StoreProvider'
-
-import {getNoteHasMore} from '../selectors/getNoteHasMore'
-import {getNoteIsLoading} from '../selectors/getNoteIsLoading'
-import {getNotePage} from '../selectors/getNotePage'
-import {noteListSliceName} from '../slices/NoteListSlice'
+import {getNoteHasMore, getNoteIsLoading, getNotePage} from 'entity/Note'
 
 import {fetchNotes} from './fetchNotes'
 
 export const fetchNewPageNotes =
     createAsyncThunk<void, void, ThunkApi<string>>
-    (`${noteListSliceName}/fetchNewPageNotes`,async (args, thunkAPI) => {
+    ('$noteList/fetchNewPageNotes',async (args, thunkAPI) => {
         const {
             rejectWithValue,
             getState,

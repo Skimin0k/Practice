@@ -3,11 +3,10 @@ import { AxiosInstance } from 'axios'
 import {
     draftNoteSliceName,
     DraftNoteSliceStateSchema,
-    filtersNoteSliceName,
-    FiltersSliceStateSchema,
     noteListSliceName,
     NoteListSliceStateSchema
 } from 'entity/Note'
+import {filtersNoteSliceName, FiltersSliceStateSchema} from 'feature/NoteList'
 
 export interface StateSchema {
     [noteListSliceName]: NoteListSliceStateSchema,

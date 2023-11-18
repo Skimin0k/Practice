@@ -1,7 +1,8 @@
 import React, {memo, useCallback} from 'react'
 import {useSelector} from 'react-redux'
 import {useAppDispatch} from 'app/StoreProvider'
-import {draftNoteActions, fetchNewPageNotes, MiniCard, noteListSelectors, NoteType} from 'entity/Note'
+import {draftNoteActions, MiniCard, noteListSelectors, NoteType} from 'entity/Note'
+import {fetchNewPageNotes} from 'feature/NoteList'
 import {InfiniteList} from 'shared/ui/InfiniteList/InfiniteList'
 
 import styles from './NoteList.module.scss'

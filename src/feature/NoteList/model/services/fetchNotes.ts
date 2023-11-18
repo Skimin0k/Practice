@@ -1,10 +1,9 @@
 import {createAsyncThunk} from '@reduxjs/toolkit'
 import {ThunkApi} from 'app/StoreProvider'
-import {getFiltersOrder} from 'entity/Note'
+import {getNoteDownloadLimit, NoteType} from 'entity/Note'
+import {getFiltersOrder} from 'feature/NoteList'
 
-import {getNoteDownloadLimit} from '../selectors/getNoteDownloadLimit'
 import {getSearchInput} from '../selectors/getSearchInput'
-import {NoteType} from '../types/types'
 
 export interface fetchNotesProps {
     replace?:boolean,

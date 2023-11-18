@@ -1,7 +1,7 @@
 import {createEntityAdapter, createSlice, EntityState, PayloadAction} from '@reduxjs/toolkit'
 import {StateSchema} from 'app/StoreProvider'
 
-import {fetchNotes} from '../services/fetchNotes'
+import {fetchNotes} from '../../../../feature/NoteList/model/services/fetchNotes'
 import {removeNote} from '../services/removeNote'
 import {NoteType} from '../types/types'
 
